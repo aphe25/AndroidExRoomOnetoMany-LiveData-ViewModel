@@ -56,6 +56,13 @@ public class KecepatanActivity extends AppCompatActivity {
         final EditText panjangEdt = findViewById(R.id.panjang_kec_edt);
         Button simpanBtn = findViewById(R.id.button4);
 
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase = AppDatabase.getsInstance(getApplicationContext());
+            }
+        });
+
         simpanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +80,6 @@ public class KecepatanActivity extends AppCompatActivity {
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
-                            appDatabase = AppDatabase.getsInstance(getApplicationContext());
                             appDatabase.dataDao().insertData(dataEntry);
                         }
                     });
@@ -88,7 +94,6 @@ public class KecepatanActivity extends AppCompatActivity {
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
-                        appDatabase = AppDatabase.getsInstance(getApplicationContext());
                         appDatabase.dataDao().updateProjectData(projectEntry);
                     }
                 });
